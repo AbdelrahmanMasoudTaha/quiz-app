@@ -35,9 +35,9 @@ void switchScreen(){
           width: double.infinity,
           decoration: const BoxDecoration(
               gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Color(0xffE16808), Color(0xff1BC4E0)],
+            // begin: Alignment.topRight,
+            // end: Alignment.bottomLeft,
+            colors: [Color(0xff69ACFF), Color(0xf0C06EFF)],
           )),
           child:  activeScreen,
         ),

@@ -1,5 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz/answer_button.dart';
+import 'package:quiz/data/questions.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Questions extends StatefulWidget {
   const Questions({super.key});
@@ -9,67 +14,35 @@ class Questions extends StatefulWidget {
 }
 
 class _QuestionsState extends State<Questions> {
+  final currentQuestion = questions[1];
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'Question1...',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w600,
-            color: Colors.white.withOpacity(0.7),
+           Text(
+            currentQuestion.question,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.aBeeZee(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+              color: Colors.white.withOpacity(0.7),
+            ),
           ),
-        ),
         const SizedBox(
           height: 40,
         ),
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text('answer',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-              )),
+        ...currentQuestion.getShuffledAnswers().map(
+            (String e){
+             return Container(
+               margin: EdgeInsets.all(10),
+                 child: AnswerButton(answerText: e, onPress: (){})
+             );
+            }
         ),
-        const SizedBox(
-          height: 30,
-        ),
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text('answer',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-              )),
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text('answer',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-              )),
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text('answer',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-              )),
-        )
+
+
       ],
     );
   }
