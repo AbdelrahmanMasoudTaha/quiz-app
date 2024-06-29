@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:quiz/data/questions.dart';
 import 'package:quiz/question_screen.dart';
@@ -25,12 +25,17 @@ class _QuizScreenState extends State<QuizScreen> {
     if (selectedAnswers.length == questions.length) {
 
       setState(() {
-        activeScreen =  ResultScreen(selectedAnswers);
+        activeScreen =  ResultScreen(selectedAnswers, restart: restart,);
 
       });
-      selectedAnswers=[];
+
     }
-    log(selectedAnswers.toString());
+  }
+  void restart(){
+    setState(() {
+      selectedAnswers=[];
+      activeScreen = Home(switchScreen);
+    });
   }
 
   @override

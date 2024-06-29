@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Home extends StatelessWidget {
-   Home(this.switchScreen,{super.key});
- void Function() switchScreen;
+   const Home(this.switchScreen,{super.key});
+ final void Function() switchScreen;
 
 
   @override

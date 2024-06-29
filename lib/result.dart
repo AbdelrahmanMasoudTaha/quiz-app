@@ -1,16 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/data/questions.dart';
+import 'package:quiz/summery.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen(
     this.selectedAnswers, {
-    super.key,
+    super.key, required this.restart,
   });
 
   final List<String> selectedAnswers;
-
+  final Function() restart;
 // List<Map<String, Object>>
   List<Map<String, Object>> getSummeryData() {
     final List<Map<String, Object>> summery = [];
@@ -27,6 +27,11 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final summeryData = getSummeryData();
+    int numOfCorrectAnswers = summeryData.where((e) {
+      return e['user_answer'] == e['answer'];
+    }).length;
+
     return Container(
         margin: const EdgeInsets.all(10),
         child: Column(
@@ -34,7 +39,7 @@ class ResultScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'You answered 3 out of 6 Questions ',
+              'You answered $numOfCorrectAnswers out of ${questions.length} Questions ',
               textAlign: TextAlign.center,
               style: GoogleFonts.aBeeZee(
                 fontSize: 20,
@@ -45,35 +50,23 @@ class ResultScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            ...getSummeryData().map((e) {
-              return Column(
-                children: [
-                  Text(
-                    e['question_index'].toString(),
-                  ),
-                  Text(
-                    e['question'].toString(),
-                  ),
-                  Text(
-                    e['answer'].toString(),
-                  ),
-                  Text(
-                    e['user_answer'].toString(),
-                  ),
-                ],
-              );
-            }),
+            Summery(summeryData: summeryData),
             const SizedBox(
               height: 30,
             ),
-            TextButton(
-              onPressed: () {},
-              child: const Text(
+            TextButton.icon(
+              onPressed: restart,
+              label: const Text(
                 'Restart Quiz',
                 style: TextStyle(
-                  fontSize: 15,
-                  color: Color(0xa0530191),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xffcabff1),
                 ),
+              ),
+              icon: const Icon(
+                Icons.restart_alt_outlined,
+                color: Color(0xffcabff1),
               ),
             )
           ],
