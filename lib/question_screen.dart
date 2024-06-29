@@ -7,17 +7,30 @@ import 'package:quiz/data/questions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Questions extends StatefulWidget {
-  const Questions({super.key});
-
+   const Questions(this.onSelectedAnswer,{super.key});
+  final void Function(String) onSelectedAnswer;
   @override
   State<Questions> createState() => _QuestionsState();
 }
 
 class _QuestionsState extends State<Questions> {
-  final currentQuestion = questions[1];
+
+  var questionIndex = 0;
+void  answerQuestion(String answer){
+
+  setState(() {
+    widget.onSelectedAnswer(answer);
+    questionIndex++;
+  });
+}
+
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final currentQuestion = questions[questionIndex];
+    return Container(
+        margin: const EdgeInsets.all(10),
+    child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -35,15 +48,15 @@ class _QuestionsState extends State<Questions> {
         ),
         ...currentQuestion.getShuffledAnswers().map(
             (String e){
-             return Container(
-               margin: EdgeInsets.all(10),
-                 child: AnswerButton(answerText: e, onPress: (){})
-             );
+             return  Container(
+                     margin :const EdgeInsets.symmetric(horizontal: 20,vertical: 10) ,
+                     child: AnswerButton(answerText: e, onPress:()=> answerQuestion(e)));
+
             }
         ),
 
 
       ],
-    );
+    ));
   }
 }
